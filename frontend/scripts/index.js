@@ -73,4 +73,4 @@ function deleteUser(){
     })
 
     this.location.reload()
-} 
+}
