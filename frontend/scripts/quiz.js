@@ -1,121 +1,128 @@
-const question = document.querySelector('#question');
-const choices = Array.from(document.querySelectorAll('.choice-text'));
-const progressText = document.querySelector('#progressText');
-const scoreText = document.querySelector('#score');
-const progressBarFull = document.querySelector('#progressBarFull');
+const playButton = document.getElementById('play-btn')
+const nextButton = document.getElementById('next-btn')
+const questionContainerElement = document.getElementById('question-container')
+const questionElement = document.getElementById('question')
+const answerButtonsElement = document.getElementById('answer-buttons')
 
-let currentQuestion = {}
-let acceptingAnswers = true
-let score = 0
-let questionCounter = 0
-let availableQuestions = []
+let shuffledQuestions, currentQuestionIndex
 
-let questions = [
-    {
-        question: 'You should begin eating your meal...',
-        choice1: 'As soon as you are seated',
-        choice2: 'When everyone has been served',
-        choice3: 'When you are served',
-        choice4: 'After everyone else has eaten first',
-        answer: 2,
-    },
-    {
-        question: "A correct thank-you note should have...",
-        choice1: "At least two sentences",
-        choice2: "Just the words thank you",
-        choice3: "A minimum of two pages",
-        choice4: "Just buy a card with thank-you on it",
-        answer: 1,
-    },
-    {
-        question: "After the knife and fork has been used, keep them...?",
-        choice1: "On the table",
-        choice2: "Either on the plate or table",
-        choice3: "On the plate",
-        choice4: "Hand them to waitress",
-        answer: 3,
-    },
-    {
-        question: "When bread is served at the meal....",
-        choice1: "Break off a small piece and butter it",
-        choice2: "Butter a whole piece at a time",
-        choice3: "Cut it in half and butter it",
-        choice4: "Make a butter sandwich",
-        answer: 1,
-    },
-    {
-        question: "Impressions are made within the first ______ upon meeting someone",
-        choice1: "7 seconds",
-        choice2: "60 minutes",
-        choice3: "30 seconds",
-        choice4: "2 hours",
-        answer: 1,
-    }
-]
-
-const SCORE_POINTS = 100
-const MAX_QUESTIONS = 5
-
-startGame = () => {
-    questionCounter = 0
-    score = 0
-    availableQuestions = [...questions]
-    getNewQuestion()
-}
-
-getNewQuestion = () => {
-    if (availableQuestions.length === 0 || questionCounter > MAX_QUESTIONS) {
-        localStorage.setItem('mostRecentScore', score)
-
-        return window.location.assign('results.html')
-    }
-
-    questionCounter++
-    progressText.innerText = `Question ${questionCounter} of ${MAX_QUESTIONS}`
-    progressBarFull.style.width = `${(questionCounter / MAX_QUESTIONS) * 100}%`
-
-    const questionsIndex = Math.floor(Math.random() * availableQuestions.length)
-    currentQuestion = availableQuestions[questionsIndex]
-    question.innerText = currentQuestion.question
-
-    choices.forEach(choice => {
-        const number = choice.dataset['number']
-        choice.innerText = currentQuestion['choice' + number]
-    })
-
-    availableQuestions.splice(questionsIndex, 1)
-
-    acceptingAnswers = true
-}
-
-choices.forEach(choice => {
-    choice.addEventListener('click', e => {
-        if (!acceptingAnswers) return
-
-        acceptingAnswers = false
-        const selectedChoice = e.target
-        const selectedAnswer = selectedChoice.dataset['number']
-
-        let classToApply = selectedAnswer == currentQuestion.answer ? 'correct' : 'incorrect'
-
-        if (classToApply === 'correct') {
-            incrementScore(SCORE_POINTS)
-        }
-
-        selectedChoice.parentElement.classList.add(classToApply)
-
-        setTimeout(() => {
-            selectedChoice.parentElement.classList.remove(classToApply)
-            getNewQuestion()
-
-        }, 1000)
-    })
+playButton.addEventListener('click', startGame)
+nextButton.addEventListener('click', () => {
+  currentQuestionIndex++
+  setNextQuestion()
 })
 
-incrementScore = num => {
-    score += num
-    scoreText.innerText = score
+function startGame() {
+    header.classList.add('hide')
+    playButton.classList.add('hide')
+    questionCounter = 0
+    score = 0
+  shuffledQuestions = questions.sort(() => Math.random() - .5)
+  currentQuestionIndex = 0
+  questionContainerElement.classList.remove('hide')
+  setNextQuestion()
 }
 
-startGame()
+function setNextQuestion() {
+  resetState()
+  showQuestion(shuffledQuestions[currentQuestionIndex])
+}
 
+function showQuestion(question) {
+  questionElement.innerText = question.question
+  question.answers.forEach(answer => {
+    const button = document.createElement('button')
+    button.innerText = answer.text
+    button.classList.add('btn')
+    if (answer.correct) {
+      button.dataset.correct = answer.correct
+    }
+    button.addEventListener('click', selectAnswer)
+    answerButtonsElement.appendChild(button)
+  })
+}
+
+function resetState() {
+  clearStatusClass(document.body)
+  nextButton.classList.add('hide')
+  while (answerButtonsElement.firstChild) {
+    answerButtonsElement.removeChild(answerButtonsElement.firstChild)
+  }
+}
+
+function selectAnswer(e) {
+  const selectedButton = e.target
+  const correct = selectedButton.dataset.correct
+  setStatusClass(document.body, correct)
+  Array.from(answerButtonsElement.children).forEach(button => {
+    setStatusClass(button, button.dataset.correct)
+  })
+  if (shuffledQuestions.length > currentQuestionIndex + 1) {
+    nextButton.classList.remove('hide')
+  } else {
+    playButton.innerText = 'Restart'
+    playButton.classList.remove('hide')
+  }
+}
+
+function setStatusClass(element, correct) {
+  clearStatusClass(element)
+  if (correct) {
+    element.classList.add('correct')
+  } else {
+    element.classList.add('wrong')
+  }
+}
+
+function clearStatusClass(element) {
+  element.classList.remove('correct')
+  element.classList.remove('wrong')
+}
+
+const questions = [
+  {
+    question: 'You should begin eating your meal...',
+    answers: [
+      { text: 'As soon as you are seated', correct: false },
+      { text: 'When everyone has been served', correct: true },
+      { text: 'When you are served', correct: false },
+      { text: 'After everyone else has eaten first', correct: false }
+    ]
+  },
+  {
+    question: 'A correct thank-you note should have...',
+    answers: [
+      { text: 'At least two sentences', correct: true },
+      { text: 'Just the words thank you', correct: false },
+      { text: 'A minimum of two pages', correct: false },
+      { text: 'Just buy a card with thank-you on it', correct: false }
+    ]
+  },
+  {
+    question: 'After the knife and fork has been used, keep them...',
+    answers: [
+      { text: 'On the table', correct: false },
+      { text: 'Either on the plate or table', correct: false },
+      { text: 'On the plate', correct: true },
+      { text: 'Hand them to waitress', correct: false }
+    ]
+  },
+  {
+    question: 'When bread is served at the meal...',
+    answers: [
+      { text: 'Break off a small piece and butter it', correct: true },
+      { text: 'Butter a whole piece at a time', correct: false },
+      { text: 'Cut it in half and butter it', correct: false },
+      { text: 'Make a butter sandwich', correct: false }
+    ]
+  },
+  {
+    question: 'Impressions are made within the first ______ upon meeting someone',
+    answers: [
+      { text: '7 seconds', correct: true },
+      { text: '60 minutes', correct: false },
+      { text: '30 seconds', correct: false },
+      { text: '2 hours', correct: false }
+    ]
+  }
+]

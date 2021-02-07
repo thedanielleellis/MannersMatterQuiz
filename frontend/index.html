@@ -1,34 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="style.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css" integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.2/css/all.css"
+        integrity="sha384-vSIIfh2YWi9wW0r9iZe7RJPrKwp6bG+s9QZMoITbCckVJqGCCRhc+ccxNcdpHuYu" crossorigin="anonymous">
     <script defer src="scripts/quiz.js"></script>
     <script defer src="scripts/index.js"></script>
     <script defer src="scripts/user.js"></script>
-    <script defer src="scripts/results.js"></script>
-
-    
     <title>MannersMatterQuiz</title>
 </head>
+
 <body>
-    <div class="header">
-        <h2>Welcome to Manners Matter Quiz!!</h2>
-        <img src="https://bq0vwhlxvibsd2b2gz6bq50m-wpengine.netdna-ssl.com/wp-content/uploads/2017/03/Manners-1024x1024.jpg" id="myimage" alt="Manners Photo">
-    </header>
-<br>
 
-    <div id="users-form" class="user">
-    </div>
-    <div id="users-container" class="user">
+    <div class="header" id="header">
+        <h1>Welcome to Manners Matter Quiz!!</h1>
+        <img src="https://bq0vwhlxvibsd2b2gz6bq50m-wpengine.netdna-ssl.com/wp-content/uploads/2017/03/Manners-1024x1024.jpg"
+            id="myimage" alt="Manners Photo"><br>
+
+        <div id="users-form" class="user"></div>
+
+        <div id="users-container" class="user"></div>
+        <br>
+        <div class="controls">
+            <button id="play-btn" class="play-btn btn">Play</button>
+        </div>
     </div>
 
-<!-- HOME -->
-    <div id="home" class="flex-column flex-center">
-        <a href="quiz.html" class="btn">Play<i class="fas fa-umbrella-beach"></i></a>
+    <div class="container">
+        <div id="question-container" class="hide">
+            <div id="question">Question</div>
+            <div id="answer-buttons" class="btn-grid">
+                <button class="btn">Answer 1</button>
+                <button class="btn">Answer 2</button>
+                <button class="btn">Answer 3</button>
+                <button class="btn">Answer 4</button>
+            </div>
+            <div class="controls">
+                <button id="next-btn" class="next-btn btn hide">Next</button>
+            </div>
+        </div>
     </div>
-
 </body>
 </html>
