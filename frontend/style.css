@@ -7,8 +7,6 @@
   --hue-neutral: 200;
   --hue-wrong: 0;
   --hue-correct: 145;
-    background: linear-gradient(90deg, rgb(255, 239, 18) 0%, rgb(255, 94, 0) 100%);
-
 }
 
 body {
@@ -43,7 +41,8 @@ body.wrong {
   align-items: center;
   max-width: 80rem;
   margin: 0 auto;
-  padding: 2rem;  
+  padding: 2rem; 
+  font-size: 100%; 
 }
 
 .btn-grid {
@@ -61,6 +60,8 @@ body.wrong {
   padding: 5px 10px;
   color: white;
   outline: none;
+  font-size: 100%; 
+
 }
 
 .btn:hover {
@@ -106,4 +107,3 @@ body.wrong {
   float: left;
   width: 980px;
 }
-
