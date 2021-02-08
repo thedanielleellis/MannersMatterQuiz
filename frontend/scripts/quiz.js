@@ -13,10 +13,8 @@ nextButton.addEventListener('click', () => {
 })
 
 function startGame() {
-    header.classList.add('hide')
-    playButton.classList.add('hide')
-    questionCounter = 0
-    score = 0
+  header.classList.add('hide')
+  playButton.classList.add('hide')
   shuffledQuestions = questions.sort(() => Math.random() - .5)
   currentQuestionIndex = 0
   questionContainerElement.classList.remove('hide')
@@ -62,6 +60,7 @@ function selectAnswer(e) {
   } else {
     playButton.innerText = 'Restart'
     playButton.classList.remove('hide')
+    questionContainerElement.classList.add('hide')
   }
 }
 

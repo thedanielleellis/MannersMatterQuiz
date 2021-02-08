@@ -7,6 +7,8 @@
   --hue-neutral: 200;
   --hue-wrong: 0;
   --hue-correct: 145;
+    background: linear-gradient(90deg, rgb(255, 239, 18) 0%, rgb(255, 94, 0) 100%);
+
 }
 
 body {
@@ -100,12 +102,7 @@ body.wrong {
   width: 50%;
 }
 
-.flex-column {
-  display: flex;
-  flex-direction: column;
-}
-
-.flex-center {
-  justify-content: center;
-  align-items: center;
+#wrapper {
+  float: left;
+  width: 980px;
 }
