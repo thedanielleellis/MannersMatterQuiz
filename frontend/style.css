@@ -1,6 +1,6 @@
 *, *::before, *::after {
   box-sizing: border-box;
-  font-family: Gotham Rounded;
+  font-family: 'Nova Square';
 }
 
 :root {
@@ -34,6 +34,12 @@ body.wrong {
   text-align: center;
 }
 
+h1 {
+  font-size: 3rem;
+  color: #fff;
+  margin-bottom: 2rem;
+}
+
 .container {
   width: 100vw;
   display: flex;
@@ -50,6 +56,8 @@ body.wrong {
   grid-template-columns: repeat(2, auto);
   gap: 10px;
   margin: 20px 0;
+  font-size: 2rem;
+  min-width: 50rem;
 }
 
 .btn {
@@ -77,7 +85,7 @@ body.wrong {
   --hue: var(--hue-wrong);
 }
 
-.play-btn, .next-btn {
+.play-btn, .next-btn, .home-btn{
   font-size: 1.5rem;
   font-weight: bold;
   padding: 10px 20px;
